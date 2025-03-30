@@ -1,70 +1,36 @@
-interface FilaInterface<T> {
-    void adicionar(T elemento);
-    T remover();
-    T primeiroElemento();
-    boolean isEmpty();
-    int tamanho();
-}
-
-public class Fila<T> implements FilaInterface<T> {
-
-    private static class Nodo<T> {
+class Fila<T> {
+    private static class No<T> {
         T dado;
-        Nodo<T> proximo;
-
-        public Nodo(T dado) {
+        No<T> proximo;
+        No(T dado) {
             this.dado = dado;
-            this.proximo = null;
         }
     }
 
-    private Nodo<T> frente;
-    private Nodo<T> tras;
-    private int tamanho;
+    private No<T> frente, tras;
 
-    public Fila() {
-        this.frente = this.tras = null;
-        this.tamanho = 0;
+    public void enfileirar(T dado) {
+        No<T> novo = new No<>(dado);
+        if (tras != null) {
+            tras.proximo = novo;
+        }
+        tras = novo;
+        if (frente == null) {
+            frente = novo;
+        }
     }
 
-    public void adicionar(T elemento) {
-        Nodo<T> novoNodo = new Nodo<>(elemento);
-        if (isEmpty()) {
-            frente = tras = novoNodo;
-        } else {
-            tras.proximo = novoNodo;
-            tras = novoNodo;
-        }
-        tamanho++;
-    }
-
-    public T remover() {
-        if (isEmpty()) {
-            throw new IllegalStateException("Fila vazia!");
-        }
+    public T desenfileirar() {
+        if (frente == null) return null;
         T dado = frente.dado;
         frente = frente.proximo;
-        if (frente == null) { // Se a fila ficou vazia, resetamos 'tras'
+        if (frente == null) {
             tras = null;
         }
-        tamanho--;
         return dado;
     }
 
-    public T primeiroElemento() {
-        if (isEmpty()) {
-            throw new IllegalStateException("Fila vazia!");
-        }
-        return frente.dado;
+    public boolean estaVazia() {
+        return frente == null;
     }
-
-    @Override
-    public boolean isEmpty() {
-        return false;
-    }
-
-    public int tamanho() {
-        return tamanho;
-    }
-
 }
