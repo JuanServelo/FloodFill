@@ -11,16 +11,16 @@ class Imagem {
         this.imagem = ImageIO.read(new File(caminho));
     }
 
-    public void salvar(String caminho) throws IOException {
-        ImageIO.write(imagem, "png", new File(caminho));
-    }
-
-    public void pintarPixel(int x, int y, Color cor) {
-        imagem.setRGB(x, y, cor.getRGB());
+    public BufferedImage getImagem() {
+        return imagem;
     }
 
     public Color getCorPixel(int x, int y) {
         return new Color(imagem.getRGB(x, y));
+    }
+
+    public void pintarPixel(int x, int y, Color cor) {
+        imagem.setRGB(x, y, cor.getRGB());
     }
 
     public int getLargura() {
@@ -29,9 +29,5 @@ class Imagem {
 
     public int getAltura() {
         return imagem.getHeight();
-    }
-
-    public BufferedImage getImagem() {
-        return imagem;
     }
 }

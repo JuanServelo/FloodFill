@@ -1,12 +1,4 @@
 class Pilha<T> {
-    private static class No<T> {
-        T dado;
-        No<T> proximo;
-        No(T dado) {
-            this.dado = dado;
-        }
-    }
-
     private No<T> topo;
 
     public void empilhar(T dado) {
@@ -16,7 +8,7 @@ class Pilha<T> {
     }
 
     public T desempilhar() {
-        if (topo == null) return null;
+        if (estaVazia()) return null;
         T dado = topo.dado;
         topo = topo.proximo;
         return dado;

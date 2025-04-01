@@ -20,14 +20,17 @@ class Preenchimento {
             protected Void doInBackground() {
                 Pilha<Ponto> pilha = new Pilha<>();
                 Color corOriginal = img.getCorPixel(x, y);
-                if (corOriginal.equals(novaCor)) return null;
+                if (corOriginal.equals(novaCor)) {
+                    return null;
+                }
 
                 pilha.empilhar(new Ponto(x, y));
 
                 while (!pilha.estaVazia()) {
                     Ponto p = pilha.desempilhar();
-                    if (p.x < 0 || p.x >= img.getLargura() || p.y < 0 || p.y >= img.getAltura()) continue;
-                    if (!img.getCorPixel(p.x, p.y).equals(corOriginal)) continue;
+                    if (p.x < 0 || p.x >= img.getLargura() || p.y < 0 || p.y >= img.getAltura() || !img.getCorPixel(p.x, p.y).equals(corOriginal)) {
+                        continue;
+                    }
 
                     img.pintarPixel(p.x, p.y, novaCor);
                     frames.add(cloneImage(img.getImagem()));
@@ -44,7 +47,6 @@ class Preenchimento {
                     pilha.empilhar(new Ponto(p.x, p.y + 1));
                     pilha.empilhar(new Ponto(p.x, p.y - 1));
                 }
-                criarGif(frames, "preenchimento.gif");
                 return null;
             }
 
@@ -71,8 +73,9 @@ class Preenchimento {
 
                 while (!fila.estaVazia()) {
                     Ponto p = fila.desenfileirar();
-                    if (p.x < 0 || p.x >= img.getLargura() || p.y < 0 || p.y >= img.getAltura()) continue;
-                    if (!img.getCorPixel(p.x, p.y).equals(corOriginal)) continue;
+                    if (p.x < 0 || p.x >= img.getLargura() || p.y < 0 || p.y >= img.getAltura() || !img.getCorPixel(p.x, p.y).equals(corOriginal)){
+                        continue;
+                    }
 
                     img.pintarPixel(p.x, p.y, novaCor);
                     frames.add(cloneImage(img.getImagem()));
@@ -89,7 +92,6 @@ class Preenchimento {
                     fila.enfileirar(new Ponto(p.x, p.y + 1));
                     fila.enfileirar(new Ponto(p.x, p.y - 1));
                 }
-                criarGif(frames, "preenchimento_fila.gif");
                 return null;
             }
 
@@ -106,23 +108,5 @@ class Preenchimento {
         g.drawImage(img, 0, 0, null);
         g.dispose();
         return copy;
-    }
-
-    private static void criarGif(ArrayList<BufferedImage> frames, String caminho) {
-        try {
-            ImageWriter writer = ImageIO.getImageWritersByFormatName("gif").next();
-            ImageOutputStream output = new FileImageOutputStream(new File(caminho));
-            writer.setOutput(output);
-            writer.prepareWriteSequence(null);
-            for (BufferedImage frame : frames) {
-                writer.writeToSequence(new IIOImage(frame, null, null), null);
-                Thread.sleep(100);
-            }
-            writer.endWriteSequence();
-            writer.dispose();
-            output.close();
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 }

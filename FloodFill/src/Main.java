@@ -6,16 +6,14 @@ public class Main {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             try {
-                Imagem imagem = new Imagem("foto.png");
+                Imagem imagem = new Imagem("kindred.png");
                 Janela janela = new Janela(imagem);
                 janela.setVisible(true);
 
-                //preencher com pilha
-                //Preenchimento.preencherComPilha(imagem, 10, 90, Color.RED, janela);
+                Preenchimento.preencherComPilha(imagem, 100, 100, Color.BLUE, janela);
 
-                //preencher com fila
                 Preenchimento.preencherComFila(imagem, 10, 90, Color.RED, janela);
-                imagem.salvar("saida_pilha.png");
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
