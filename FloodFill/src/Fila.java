@@ -13,7 +13,9 @@ class Fila<T> {
     }
 
     public T desenfileirar() {
-        if (estaVazia()) return null;
+        if (estaVazia()){
+            return null;
+        }
         T dado = frente.dado;
         frente = frente.proximo;
         if (frente == null) {

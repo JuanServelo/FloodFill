@@ -8,7 +8,9 @@ class Pilha<T> {
     }
 
     public T desempilhar() {
-        if (estaVazia()) return null;
+        if (estaVazia()){
+            return null;
+        }
         T dado = topo.dado;
         topo = topo.proximo;
         return dado;
