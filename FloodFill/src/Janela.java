@@ -7,7 +7,7 @@ class Janela extends JFrame {
 
     public Janela(Imagem imagem) {
         setTitle("Flood Fill");
-        setSize(1200, 1200);
+        setSize(500, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
